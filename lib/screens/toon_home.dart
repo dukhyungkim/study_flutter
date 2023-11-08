@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:study_flutter/services/api_service.dart';
 
 import '../models/webtoon_model.dart';
+import '../widgets/webtoon_widget.dart';
 
 class ToonHome extends StatelessWidget {
   ToonHome({super.key});
@@ -53,39 +54,10 @@ class ToonHome extends StatelessWidget {
       itemCount: snapshot.data!.length,
       itemBuilder: (context, index) {
         final webtoon = snapshot.data![index];
-        return Column(
-          children: [
-            Container(
-              width: 250,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 15,
-                      offset: const Offset(10, 10),
-                      color: Colors.black.withOpacity(0.5),
-                    )
-                  ]),
-              clipBehavior: Clip.hardEdge,
-              child: Image.network(
-                webtoon.thumb,
-                headers: const {
-                  'User-Agent':
-                      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36',
-                  'Referer': 'https://comic.naver.com',
-                },
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Text(
-              webtoon.title,
-              style: const TextStyle(
-                fontSize: 22,
-              ),
-            )
-          ],
+        return Webtoon(
+          title: webtoon.title,
+          thumb: webtoon.thumb,
+          id: webtoon.id,
         );
       },
       separatorBuilder: (context, index) => const SizedBox(width: 40),

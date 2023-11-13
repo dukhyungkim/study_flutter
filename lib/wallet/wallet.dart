@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:study_flutter/widgets/button.dart';
-import 'package:study_flutter/widgets/currency_card.dart';
+import 'package:study_flutter/wallet/button.dart';
+import 'package:study_flutter/wallet/currency_card.dart';
 
 class Wallet extends StatelessWidget {
   const Wallet({super.key});

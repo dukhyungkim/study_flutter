@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:study_flutter/widgets/chat_message.dart';
+import 'package:study_flutter/msgpapa/chat_message.dart';
 
 class MessengerHome extends StatefulWidget {
   const MessengerHome({super.key});

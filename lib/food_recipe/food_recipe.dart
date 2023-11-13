@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:study_flutter/screens/recipe_home.dart';
+import 'package:study_flutter/food_recipe/recipe_home.dart';
 
 class FoodRecipe extends StatelessWidget {
   const FoodRecipe({super.key});

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:study_flutter/services/api_service.dart';
+import 'package:study_flutter/toonflix/services/api_service.dart';
 
-import '../models/webtoon_model.dart';
-import '../widgets/webtoon_widget.dart';
+import 'webtoon_widget.dart';
+import 'models/webtoon_model.dart';
 
 class ToonHome extends StatelessWidget {
   ToonHome({super.key});

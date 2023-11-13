@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:study_flutter/screens/messenger_home.dart';
+import 'package:study_flutter/msgpapa/messenger_home.dart';
 
 class MsgPapa extends StatelessWidget {
   const MsgPapa({super.key});

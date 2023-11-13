@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:study_flutter/models/webtoon_detail_model.dart';
-import 'package:study_flutter/models/webtoon_episode_model.dart';
-import 'package:study_flutter/services/api_service.dart';
+import 'package:study_flutter/toonflix/services/api_service.dart';
 
-import '../widgets/episode.dart';
+import 'episode.dart';
+import 'models/webtoon_detail_model.dart';
+import 'models/webtoon_episode_model.dart';
 
 class DetailScreen extends StatefulWidget {
   final String title, thumb, id;

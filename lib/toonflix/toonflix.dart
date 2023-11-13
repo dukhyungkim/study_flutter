@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:study_flutter/screens/toon_home.dart';
+import 'package:study_flutter/toonflix/toon_home.dart';
 
 class Toonflix extends StatelessWidget {
   const Toonflix({super.key});

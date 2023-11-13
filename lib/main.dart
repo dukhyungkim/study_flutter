@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:study_flutter/msgpapa/msgpapa.dart';
+import 'package:study_flutter/instagram/instagram.dart';
 
 void main() {
-  runApp(const MsgPapa());
+  runApp(const Instagram());
 }

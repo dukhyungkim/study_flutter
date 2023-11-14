@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:study_flutter/instagram/home.dart';
+import 'package:study_flutter/instagram/home_page.dart';
 
 class Instagram extends StatelessWidget {
   const Instagram({super.key});

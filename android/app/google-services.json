@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "921106020688",
+    "project_id": "yummy-chat-20231116",
+    "storage_bucket": "yummy-chat-20231116.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:921106020688:android:8551f2161a31a2abd95455",
+        "android_client_info": {
+          "package_name": "kr.kimdh.study_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDl50hZNR7gqhVZFjVJL5_UBWlObxArYz4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

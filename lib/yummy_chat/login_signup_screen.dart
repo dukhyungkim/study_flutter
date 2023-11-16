@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:study_flutter/yummy_chat/Palette.dart';
+import 'package:study_flutter/yummy_chat/chat_screen.dart';
 
 class LoginSignupScreen extends StatefulWidget {
   const LoginSignupScreen({super.key});
@@ -9,6 +12,8 @@ class LoginSignupScreen extends StatefulWidget {
 }
 
 class _LoginSignupScreenState extends State<LoginSignupScreen> {
+  final _auth = FirebaseAuth.instance;
+
   bool isSignupScreen = true;
   final _formKey = GlobalKey<FormState>();
 
@@ -114,7 +119,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                   ],
                 ),
                 child: SingleChildScrollView(
-                  padding: EdgeInsets.only(bottom: 20),
+                  padding: const EdgeInsets.only(bottom: 20),
                   child: Column(
                     children: [
                       Row(
@@ -190,7 +195,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                             child: Column(
                               children: [
                                 TextFormField(
-                                  key: ValueKey(1),
+                                  key: const ValueKey(1),
                                   validator: (value) {
                                     if (value!.isEmpty || value.length < 4) {
                                       return "Please enter at least 4 characters.";
@@ -233,7 +238,8 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                   height: 8,
                                 ),
                                 TextFormField(
-                                  key: ValueKey(2),
+                                  keyboardType: TextInputType.emailAddress,
+                                  key: const ValueKey(2),
                                   validator: (value) {
                                     if (value!.isEmpty ||
                                         !value.contains("@")) {
@@ -277,7 +283,8 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                   height: 8,
                                 ),
                                 TextFormField(
-                                  key: ValueKey(3),
+                                  obscureText: true,
+                                  key: const ValueKey(3),
                                   validator: (value) {
                                     if (value!.isEmpty || value.length < 6) {
                                       return "password must be at least 6 characters.";
@@ -328,7 +335,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                             child: Column(
                               children: [
                                 TextFormField(
-                                  key: ValueKey(4),
+                                  key: const ValueKey(4),
                                   validator: (value) {
                                     if (value!.isEmpty || value.length < 4) {
                                       return "Please enter at least 4 characters.";
@@ -336,11 +343,11 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                     return null;
                                   },
                                   onSaved: (newValue) {
-                                    username = newValue!;
+                                    email = newValue!;
                                   },
                                   decoration: const InputDecoration(
                                     prefixIcon: Icon(
-                                      Icons.account_circle,
+                                      Icons.email,
                                       color: Palette.iconColor,
                                     ),
                                     enabledBorder: OutlineInputBorder(
@@ -359,7 +366,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                         Radius.circular(35.0),
                                       ),
                                     ),
-                                    hintText: "username",
+                                    hintText: "email",
                                     helperStyle: TextStyle(
                                       fontSize: 14,
                                       color: Palette.textColor1,
@@ -371,7 +378,8 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                   height: 8,
                                 ),
                                 TextFormField(
-                                  key: ValueKey(5),
+                                  obscureText: true,
+                                  key: const ValueKey(5),
                                   validator: (value) {
                                     if (value!.isEmpty || value.length < 6) {
                                       return "password must be at least 6 characters.";
@@ -427,42 +435,102 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
               left: 0,
               child: Center(
                 child: Container(
-                  child: Container(
-                    padding: const EdgeInsets.all(15),
-                    height: 90,
-                    width: 90,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
+                  padding: const EdgeInsets.all(15),
+                  height: 90,
+                  width: 90,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: GestureDetector(
+                    onTap: () async {
+                      if (isSignupScreen) {
                         _tryValidation();
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [
-                              Colors.orange,
-                              Colors.red,
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                          borderRadius: BorderRadius.circular(30),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.3),
-                              spreadRadius: 1,
-                              blurRadius: 1,
-                              offset: const Offset(0, 1),
-                            )
+
+                        try {
+                          final userCredential =
+                              await _auth.createUserWithEmailAndPassword(
+                                  email: email, password: password);
+
+                          if (userCredential.user != null) {
+                            if (!mounted) return;
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return const ChatScreen();
+                                },
+                              ),
+                            );
+                          }
+                        } catch (e) {
+                          Logger().d(e);
+                          if (!mounted) return;
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content:
+                                  Text("Please check your email and password"),
+                              backgroundColor: Colors.blue,
+                            ),
+                          );
+                        }
+                      }
+
+                      if (!isSignupScreen) {
+                        _tryValidation();
+
+                        try {
+                          var userCredential =
+                              await _auth.signInWithEmailAndPassword(
+                                  email: email, password: password);
+
+                          if (userCredential.user != null) {
+                            if (!mounted) return;
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return const ChatScreen();
+                                },
+                              ),
+                            );
+                          }
+                        } catch (e) {
+                          Logger().d(e);
+                          if (!mounted) return;
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content:
+                                  Text("Please check your email and password"),
+                              backgroundColor: Colors.blue,
+                            ),
+                          );
+                        }
+                      }
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [
+                            Colors.orange,
+                            Colors.red,
                           ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
                         ),
-                        child: const Icon(
-                          Icons.arrow_forward,
-                          color: Colors.white,
-                        ),
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.3),
+                            spreadRadius: 1,
+                            blurRadius: 1,
+                            offset: const Offset(0, 1),
+                          )
+                        ],
+                      ),
+                      child: const Icon(
+                        Icons.arrow_forward,
+                        color: Colors.white,
                       ),
                     ),
                   ),

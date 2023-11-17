@@ -1,9 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:study_flutter/yummy_chat/Palette.dart';
-import 'package:study_flutter/yummy_chat/chat_screen.dart';
 
 class LoginSignupScreen extends StatefulWidget {
   const LoginSignupScreen({super.key});
@@ -460,17 +460,13 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                 await _auth.createUserWithEmailAndPassword(
                                     email: email, password: password);
 
-                            if (userCredential.user != null) {
-                              if (!mounted) return;
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return const ChatScreen();
-                                  },
-                                ),
-                              );
-                            }
+                            await FirebaseFirestore.instance
+                                .collection("user")
+                                .doc(userCredential.user!.uid)
+                                .set({
+                              "username": username,
+                              "email": email,
+                            });
                           } catch (e) {
                             Logger().d(e);
                             if (!mounted) return;
@@ -488,21 +484,8 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                           _tryValidation();
 
                           try {
-                            var userCredential =
-                                await _auth.signInWithEmailAndPassword(
-                                    email: email, password: password);
-
-                            if (userCredential.user != null) {
-                              if (!mounted) return;
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return const ChatScreen();
-                                  },
-                                ),
-                              );
-                            }
+                            await _auth.signInWithEmailAndPassword(
+                                email: email, password: password);
                           } catch (e) {
                             Logger().d(e);
                             if (!mounted) return;

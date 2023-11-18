@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:study_flutter/yummy_chat/Palette.dart';
+import 'package:study_flutter/yummy_chat/add_image.dart';
 
 class LoginSignupScreen extends StatefulWidget {
   const LoginSignupScreen({super.key});
@@ -30,6 +31,18 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
     if (isValid) {
       _formKey.currentState!.save();
     }
+  }
+
+  void _showAlert(context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const Dialog(
+          backgroundColor: Colors.white,
+          child: AddImage(),
+        );
+      },
+    );
   }
 
   @override
@@ -170,21 +183,40 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                               },
                               child: Column(
                                 children: [
-                                  Text(
-                                    "SIGNUP",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: isSignupScreen
-                                          ? Palette.activeColor
-                                          : Palette.textColor1,
-                                    ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "SIGNUP",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: isSignupScreen
+                                              ? Palette.activeColor
+                                              : Palette.textColor1,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 15,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          _showAlert(context);
+                                        },
+                                        child: Icon(
+                                          Icons.image,
+                                          color: isSignupScreen
+                                              ? Colors.cyan
+                                              : Colors.grey.shade300,
+                                        ),
+                                      )
+                                    ],
                                   ),
                                   if (isSignupScreen)
                                     Container(
-                                      margin: const EdgeInsets.only(top: 3),
+                                      margin: const EdgeInsets.only(
+                                          top: 3, right: 39),
                                       height: 2,
-                                      width: 55,
+                                      width: 68,
                                       color: Colors.orange,
                                     )
                                 ],

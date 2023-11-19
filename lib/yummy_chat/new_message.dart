@@ -22,6 +22,7 @@ class _NewMessageState extends State<NewMessage> {
       "time": Timestamp.now(),
       "userId": user.uid,
       "username": userInfo.data()!["username"],
+      "portrait": userInfo["portrait"]
     });
     _messageController.clear();
   }

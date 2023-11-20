@@ -1,10 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Feed extends StatelessWidget {
+class Feed extends StatefulWidget {
   const Feed({
     super.key,
+    required this.image,
   });
+
+  final String image;
+
+  @override
+  State<Feed> createState() => _FeedState();
+}
+
+class _FeedState extends State<Feed> {
+  bool isFavorite = false;
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +22,7 @@ class Feed extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Image.asset(
-          "assets/alpha.jpg",
+          widget.image,
           height: 400,
           width: double.infinity,
           fit: BoxFit.cover,
@@ -20,11 +30,20 @@ class Feed extends StatelessWidget {
         Row(
           children: [
             IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                CupertinoIcons.heart,
-                color: Colors.black,
-              ),
+              onPressed: () {
+                setState(() {
+                  isFavorite = !isFavorite;
+                });
+              },
+              icon: isFavorite
+                  ? const Icon(
+                      CupertinoIcons.heart_fill,
+                      color: Colors.red,
+                    )
+                  : const Icon(
+                      CupertinoIcons.heart,
+                      color: Colors.black,
+                    ),
             ),
             IconButton(
               onPressed: () {},

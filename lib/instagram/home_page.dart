@@ -8,6 +8,19 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<String> imageList = [
+      "assets/alpha.jpg",
+      "assets/bear.jpeg",
+      "assets/cheetah.jpeg",
+      "assets/jaguar.jpeg",
+      "assets/leopard.jpeg",
+      "assets/cheetah_baby.jpeg",
+      "assets/racoon.jpeg",
+      "assets/simba.jpg",
+      "assets/tiger.jpeg",
+      "assets/squirrel.jpeg",
+    ];
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -33,7 +46,12 @@ class HomePage extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.white,
       ),
-      body: const Feed(),
+      body: ListView.builder(
+        itemCount: imageList.length,
+        itemBuilder: (context, index) {
+          return Feed(image: imageList[index],);
+        },
+      ),
     );
   }
 }

@@ -14,7 +14,6 @@ class _NewMessageState extends State<NewMessage> {
   String _message = "";
 
   Future<void> _sendMessage(message) async {
-    FocusScope.of(context).unfocus();
     final user = FirebaseAuth.instance.currentUser;
     final userInfo = await FirebaseFirestore.instance.collection("user").doc(user!.uid).get();
     FirebaseFirestore.instance.collection("chat").add({
@@ -24,18 +23,24 @@ class _NewMessageState extends State<NewMessage> {
       "username": userInfo.data()!["username"],
       "portrait": userInfo["portrait"]
     });
-    _messageController.clear();
   }
 
   void _onPressSend() {
+    FocusScope.of(context).unfocus();
     _sendMessage(_message);
+    _messageController.clear();
     setState(() {
       _message = "";
     });
   }
 
   void _onSubmit(message) {
+    FocusScope.of(context).unfocus();
     _sendMessage(message);
+    _messageController.clear();
+    setState(() {
+      _message = "";
+    });
   }
 
   @override
@@ -47,7 +52,7 @@ class _NewMessageState extends State<NewMessage> {
         children: [
           Expanded(
             child: TextField(
-              maxLines: null,
+              // maxLines: null,
               controller: _messageController,
               decoration: const InputDecoration(labelText: "Send a message"),
               onChanged: (value) => {

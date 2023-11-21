@@ -30,37 +30,35 @@ class _MessengerHomeState extends State<MessengerHome> {
               itemBuilder: _buildItem,
             ),
           ),
-          Container(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: _textEditingController,
-                      decoration: const InputDecoration(
-                        hintText: "input",
-                      ),
-                      onSubmitted: _handleSubmitted,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _textEditingController,
+                    decoration: const InputDecoration(
+                      hintText: "input",
                     ),
+                    onSubmitted: _handleSubmitted,
                   ),
-                  const SizedBox(
-                    width: 8.0,
+                ),
+                const SizedBox(
+                  width: 8.0,
+                ),
+                IconButton(
+                  onPressed: () {
+                    _handleSubmitted(_textEditingController.text);
+                  },
+                  icon: const Icon(
+                    Icons.send,
+                    color: Colors.amberAccent,
                   ),
-                  IconButton(
-                    onPressed: () {
-                      _handleSubmitted(_textEditingController.text);
-                    },
-                    icon: const Icon(
-                      Icons.send,
-                      color: Colors.amberAccent,
-                    ),
-                    style: TextButton.styleFrom(
-                      backgroundColor: Colors.amberAccent,
-                    ),
-                  )
-                ],
-              ),
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.amberAccent,
+                  ),
+                )
+              ],
             ),
           ),
         ],

@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:study_flutter/yummy_chat/yummy_chat.dart';
+import 'package:study_flutter/miso/miso.dart';
 
 import 'firebase_options.dart';
 
@@ -10,5 +10,5 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const YummyChat());
+  runApp(const Miso());
 }
